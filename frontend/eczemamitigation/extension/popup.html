@@ -54,9 +54,27 @@
       </tr>
       <tr>
         <td colspan="3" id="data">Fetching data...</td>
-        <td rowspan="3" id="extra">Loading...</td>
+        <td rowspan="3" id="temperature">Loading...</td>
       </tr>
     </table>
     <script src="scripts/popup.js"></script>
+    <script>
+      fetch("http://localhost:8000/latest_temperature")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.temperature) {
+            document.getElementById(
+              "temperature"
+            ).textContent = `Current Temperature: ${data.temperature}`;
+          } else {
+            document.getElementById("temperature").textContent = data.message;
+          }
+        })
+        .catch((error) => {
+          document.getElementById("temperature").textContent =
+            "Error fetching temperature";
+          console.error(error);
+        });
+    </script>
   </body>
 </html>

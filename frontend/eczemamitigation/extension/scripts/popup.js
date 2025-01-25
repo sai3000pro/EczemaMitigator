@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const dataCell = document.getElementById("data");
-  const extraCell = document.getElementById("extra");
+  const extraCell = document.getElementById("temperature");
 
   try {
     const response = await fetch("https://api.example.com/eczema-data");
