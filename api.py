@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
+import os
 
 app = FastAPI()
 
@@ -12,18 +13,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello, FastAPI!"}
+temperature_file = 'temperature_data.txt'
 
-temperature_data = {"current": None, "history": []}
+def get_latest_temperature():
+    try:
+        if os.path.exists(temperature_file):
+            with open(temperature_file, 'r') as file:
+                lines = file.readlines()
+
+            if lines:
+                latest_line = lines[-1]  
+                temperature = latest_line.split(',')[1].strip()  
+                return temperature
+            else:
+                return None  
+        else:
+            return None
+    except Exception as e:
+        return None
 
 @app.get("/temperature")
 def get_temperature():
-    return {"temperature": temperature_data["current"]}
-
-@app.post("/temperature")
-def update_temperature(new_temp: float):
-    temperature_data["current"] = new_temp
-    temperature_data["history"].append(new_temp)
-    return {"message": "Temperature updated successfully!"}
+    latest_temp = get_latest_temperature()
+    return {"temperature": latest_temp}
