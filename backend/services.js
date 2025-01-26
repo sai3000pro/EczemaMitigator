@@ -12,7 +12,11 @@ const jsonifyLastNonEmptyLine = (filePath) => {
             break;
         }
     }
-    return JSON.parse(lastNonEmptyLine);
+    const [temperature, humidity] = lastNonEmptyLine.split(' ');
+    return JSON.stringify({
+        temperature: parseFloat(temperature),
+        humidity: parseFloat(humidity)
+    });
 }
 
 const sendMsgToPhone = (temperature, threshold) => {
@@ -21,7 +25,7 @@ const sendMsgToPhone = (temperature, threshold) => {
             .create({
                 from: process.env.TWILIO_PHONE_NUM,
                 to: process.env.TWILIO_PERSONAL_PHONE,
-                body: `Alert! You are at risk of a flare up! The temperature is below ${threshold} degrees. Current temperature: ${temperature} degrees.`
+                body: `Alert! You are at risk of a flare up! The temperature is below ${threshold} degrees. Current temperature: ${temperatzure} degrees.`
             })
             .then(message => console.log(message.sid))
             .catch(error => console.error('Error sending message:', error))

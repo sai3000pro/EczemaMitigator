@@ -32,8 +32,18 @@ app.use((req, res, next) => {
 const checkTemperature = () => {
     axios.get('http://localhost:5005/api/temperature')
         .then(response => {
-            const temperature = response.data;
+            // Ensure response.data is an object
+            if (typeof response.data === 'string') {
+                response.data = JSON.parse(response.data);
+            }
+
+            console.log('Parsed Response:', response.data); // Log the parsed response
+
+            const temperature = response.data.temperature;
+            const humidity = response.data.humidity;
             console.log(`Current temperature: ${temperature}`);
+            console.log(`Current humidity: ${humidity}`);
+
             sendMsgToPhone(temperature, TEMP_THRESHOLD);
         })
         .catch(error => {
@@ -57,3 +67,4 @@ process.on("unhandledRejection", (err, promise) => {
     console.log(`Logged Error: ${err}`);
     server.close(() => process.exit(1));
 });
+
