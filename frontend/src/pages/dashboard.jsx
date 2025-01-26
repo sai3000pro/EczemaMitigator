@@ -18,11 +18,12 @@ const Dashboard = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
-
+      <h1 className="text-2xl md:text-4xl font-bold mb-5 bg-gradient-to-r from-indigo-600 to-indigo-400 bg-clip-text text-transparent">
+        Dashboard
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Temperature Box */}
-        <div className="bg-blue-100 p-4 rounded-lg shadow-md">
+        <div className="bg-blue-100 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
           <h2 className="text-xl font-semibold mb-2">Current Temperature</h2>
           <p className="text-lg text-gray-700">
             {temperature ? `${temperature}°C` : "Loading..."}
@@ -31,7 +32,7 @@ const Dashboard = () => {
         </div>
 
         {/* Humidity Box */}
-        <div className="bg-blue-100 p-4 rounded-lg shadow-md">
+        <div className="bg-blue-100 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
           <h2 className="text-xl font-semibold mb-2">Humidity</h2>
           <p className="text-lg text-gray-700">
             {humidity ? `${humidity}%` : "Loading..."}
