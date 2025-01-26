@@ -14,6 +14,7 @@ app.add_middleware(
 )
 
 temperature_file = 'temperature_data.txt'
+humidity_file = 'humidity_data.txt'
 
 def get_latest_temperature():
     try:
@@ -31,6 +32,23 @@ def get_latest_temperature():
     except Exception as e:
         print(f"Error reading file: {str(e)}")
         return None
+    
+def get_latest_humidity():
+    try:
+        if os.path.exists(humidity_file):
+            with open(humidity_file, 'r') as file:
+                lines = file.readlines()
+
+            if lines:
+                latest_line = lines[-1].strip()  # Get the last line and strip any whitespace
+                return latest_line  # Return the temperature value directly
+            else:
+                return None  # File is empty
+        else:
+            return None  # File does not exist
+    except Exception as e:
+        print(f"Error reading humidity file: {str(e)}")
+        return None
 
 
 @app.get("/temperature")
@@ -41,5 +59,16 @@ def get_temperature():
             return {"temperature": latest_temp}
         else:
             return {"temperature": "No data found"}
+    except Exception as e:
+        return {"error": str(e)}
+    
+@app.get("/humidity")
+def get_humidity():
+    try:
+        latest_hum = get_latest_humidity()
+        if latest_hum:
+            return {"humidity": latest_hum}
+        else:
+            return {"humidity": "No data found"}
     except Exception as e:
         return {"error": str(e)}
