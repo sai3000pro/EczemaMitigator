@@ -22,17 +22,24 @@ def get_latest_temperature():
                 lines = file.readlines()
 
             if lines:
-                latest_line = lines[-1]  
-                temperature = latest_line.split(',')[1].strip()  
-                return temperature
+                latest_line = lines[-1].strip()  # Get the last line and strip any whitespace
+                return latest_line  # Return the temperature value directly
             else:
-                return None  
+                return None  # File is empty
         else:
-            return None
+            return None  # File does not exist
     except Exception as e:
+        print(f"Error reading file: {str(e)}")
         return None
+
 
 @app.get("/temperature")
 def get_temperature():
-    latest_temp = get_latest_temperature()
-    return {"temperature": latest_temp}
+    try:
+        latest_temp = get_latest_temperature()
+        if latest_temp:
+            return {"temperature": latest_temp}
+        else:
+            return {"temperature": "No data found"}
+    except Exception as e:
+        return {"error": str(e)}
