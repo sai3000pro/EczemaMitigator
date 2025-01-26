@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
 import Navbar from "./components/Navbar";
+import Landing from "./pages/landing";
+import Dashboard from "./pages/dashboard";
+import AI from "./pages/ai";
 
 function App() {
   // State to store data from API
   const [data, setData] = useState(null);
-  // Fetch data from API
+  const [currentPage, setCurrentPage] = useState("landing");
 
-  // Path: backend/controllers/tempController.js
+  // Fetch data from API
   useEffect(() => {
     axios
       .get("http://localhost:5005/api/temperature")
@@ -22,20 +22,20 @@ function App() {
       });
   }, []);
 
-  // bulk of the code
+  // Function to handle page navigation
+  const handleNavigation = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div>
-      <Navbar />
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+      <Navbar onNavigate={handleNavigation} />
 
+      {currentPage === "landing" && <Landing onNavigate={handleNavigation} />}
+      {currentPage === "dashboard" && <Dashboard />}
+      {currentPage === "ai" && <AI />}
+
+      {/* Display the fetched data */}
       <h1>Data from API:</h1>
       <div className="card">{data && <div>{JSON.stringify(data)}</div>}</div>
     </div>

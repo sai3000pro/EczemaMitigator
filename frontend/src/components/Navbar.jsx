@@ -1,11 +1,9 @@
 import React from "react";
-import logo from "../assets/danger.png";
+import logo from "../assets/logo.png";
 
-// change colours probably
-
-const Navbar = () => {
+const Navbar = ({ onNavigate, currentPage }) => {
   return (
-    <nav className="bg-indigo-700 border-b border-indigo-500">
+    <nav className="bg-white shadow-md">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
@@ -14,12 +12,42 @@ const Navbar = () => {
               src={logo}
               alt="SmartSkin"
             />
-            <span className="hidden md:block text-white text-2xl font-bold ml-2">
+            <span className="hidden md:block text-2xl font-bold ml-2 text-blue-800">
               SmartSkin
             </span>
             <div className="md:ml-auto">
-              <div className="flex space-x-4">
-                <p>The Product, Dashboard, Ask AI</p>
+              <div className="flex space-x-6">
+                {/* Navigation buttons */}
+                <button
+                  className={`px-4 py-2 rounded-lg font-semibold text-sm transition duration-200 ${
+                    currentPage === "landing"
+                      ? "bg-blue-500 text-white"
+                      : "text-blue-500 hover:bg-blue-100"
+                  }`}
+                  onClick={() => onNavigate("landing")}
+                >
+                  Home
+                </button>
+                <button
+                  className={`px-4 py-2 rounded-lg font-semibold text-sm transition duration-200 ${
+                    currentPage === "dashboard"
+                      ? "bg-blue-500 text-white"
+                      : "text-blue-500 hover:bg-blue-100"
+                  }`}
+                  onClick={() => onNavigate("dashboard")}
+                >
+                  Dashboard
+                </button>
+                <button
+                  className={`px-4 py-2 rounded-lg font-semibold text-sm transition duration-200 ${
+                    currentPage === "ai"
+                      ? "bg-blue-500 text-white"
+                      : "text-blue-500 hover:bg-blue-100"
+                  }`}
+                  onClick={() => onNavigate("ai")}
+                >
+                  AI
+                </button>
               </div>
             </div>
           </div>
