@@ -15,14 +15,14 @@ const Landing = ({ onNavigate }) => {
         </div>
 
         {/* Right Column */}
-        <div className="flex-1">
+        <div className="flex-2">
           <SmartSkinProduct />
         </div>
       </div>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center ml-110 mb-10">
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600"
+          className="bg-blue-500 text-white px-10 py-5 text-lg rounded-lg shadow-md hover:bg-blue-600"
           onClick={() => onNavigate("dashboard")}
         >
           Learn about YOUR stats

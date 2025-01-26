@@ -3,7 +3,6 @@ import axios from "axios";
 import Navbar from "./components/Navbar";
 import Landing from "./pages/landing";
 import Dashboard from "./pages/dashboard";
-import AI from "./pages/ai";
 
 function App() {
   // State to store data from API
@@ -33,12 +32,7 @@ function App() {
 
       {currentPage === "landing" && <Landing onNavigate={handleNavigation} />}
       {currentPage === "dashboard" && <Dashboard />}
-      {currentPage === "ai" && <AI />}
-
-      {/* Display the fetched data */}
-      <h1>Data from API:</h1>
-      <div className="card">{data && <div>{JSON.stringify(data)}</div>}</div>
-    </div>
+    </div> 
   );
 }
 
