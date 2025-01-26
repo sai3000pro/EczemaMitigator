@@ -198,9 +198,11 @@ void loop() {
     Serial.println("Failed to read from DHT sensor!");
   } else {
     Serial.print(tempC);
+    Serial.print(" ");
+    Serial.println(humi);
     delay(1000);
     displayLevel(tempC);
     delay(1000);
-    
   }
 }
+
