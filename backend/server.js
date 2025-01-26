@@ -4,9 +4,13 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const axios = require("axios");
+
+const { sendMsgToPhone } = require("./services");
 
 const app = express();
 const PORT = process.env.PORT || 5005;
+const TEMP_THRESHOLD = 10;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -25,6 +29,19 @@ app.use((req, res, next) => {
     res.status(404).send("Sorry can't find that!");
 }
 );
+const checkTemperature = () => {
+    axios.get('http://localhost:5005/api/temperature')
+        .then(response => {
+            const temperature = response.data;
+            console.log(`Current temperature: ${temperature}`);
+            sendMsgToPhone(temperature, TEMP_THRESHOLD);
+        })
+        .catch(error => {
+            console.error('Error fetching temperature:', error);
+        });
+};
+
+setInterval(checkTemperature, 5000);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
